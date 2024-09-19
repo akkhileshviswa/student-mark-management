@@ -3,12 +3,15 @@
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->name('*.php')
+    ->ignoreDotFiles(true)
     ->exclude('vendor');
 
     return (new PhpCsFixer\Config())
     ->setRules([
-        '@PSR12' => true, // Apply PSR-12 coding standard
-        'array_syntax' => ['syntax' => 'short'], // Short array syntax rule
-        // Add other rules as needed
+        '@PSR12' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'blank_line_before_statement' => [
+            'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
+        ],
     ])
     ->setFinder($finder);
