@@ -32,7 +32,7 @@ class AdminModelTest extends TestCase
         $this->mockStatement->method('execute')->willReturn(true);
     }
 
-    public function testSignInSuccessful()
+    public function testSignInSuccess()
     {
         $_POST['username'] = 'user';
         $_POST['password'] = 'pass';
@@ -55,7 +55,7 @@ class AdminModelTest extends TestCase
         $this->assertFalse($result);
     }
 
-    public function testLoadAdminDashboard()
+    public function testLoadAdminDashboardSuccess()
     {
         $this->mockStatement->method('fetchAll')->willReturn([
             ['subject_name' => 'Math'],
@@ -74,7 +74,7 @@ class AdminModelTest extends TestCase
         $this->assertEmpty($_SESSION['subjects']);
     }
 
-    public function testAddSubjectSuccessful()
+    public function testAddSubjectSuccess()
     {
         $_POST['subject_code'] = 'MATH';
         $_POST['subject_name'] = 'Maths';
@@ -116,7 +116,7 @@ class AdminModelTest extends TestCase
         $this->assertEmpty($result);
     }
 
-    public function testAddTeacherSuccessful()
+    public function testAddTeacherSuccess()
     {
         $_POST['name'] = 'test';
         $_POST['username'] = 'testuser';

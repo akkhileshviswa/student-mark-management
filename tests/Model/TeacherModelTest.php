@@ -162,6 +162,77 @@ class TeacherModelTest extends TestCase
         $this->teacherModel->addStudent($name, $email, $mark, $subjectCode);
     }
 
+    public function testGetStudentByEmailAndTeacherIdAndSubjectSuccess()
+    {
+        $email = 'test@test.com';
+        $subjectCode = 'MAT';
+        $teacherId = 1;
+        $expectedName = 'AK';
+
+        $this->mockStatement->method('execute')->willReturn(true);
+        $this->mockStatement->method('fetch')->willReturn([
+            Constants::COLUMN_EMAIL => $email,
+            Constants::COLUMN_SUBJECT_CODE => $subjectCode,
+            Constants::COLUMN_TEACHER_ID => $teacherId,
+            Constants::COLUMN_NAME => $expectedName,
+            Constants::COLUMN_MARK => 85
+        ]);
+
+        $result = $this->teacherModel->getStudentByEmailAndTeacherIdAndSubject($email, $subjectCode, $teacherId);
+
+        $this->assertEquals($expectedName, $result[Constants::COLUMN_NAME]);
+        $this->assertEquals(85, $result[Constants::COLUMN_MARK]);
+    }
+
+    public function testGetStudentByEmailAndTeacherIdAndSubjectFailure()
+    {
+        $email = 'test@gmail.com';
+        $subjectCode = 'ASD';
+        $teacherId = 1;
+        $this->mockStatement->method('execute')->willReturn(true);
+        $this->mockStatement->method('fetch')->willReturn(false);
+
+        $result = $this->teacherModel->getStudentByEmailAndTeacherIdAndSubject($email, $subjectCode, $teacherId);
+
+        $this->assertFalse($result);
+    }
+
+    public function testUpdateStudentSuccess()
+    {
+        $id = 1;
+        $name = 'TEST';
+        $email = 'test@test.com';
+        $mark = 90;
+        $subjectCode = 'MATH';
+        $this->mockStatement->method('execute')->willReturn(true);
+        $this->mockStatement->method('fetch')->willReturn([
+            Constants::COLUMN_EMAIL => $email,
+            Constants::COLUMN_SUBJECT_CODE => $subjectCode,
+            Constants::COLUMN_TEACHER_ID => $_SESSION['teacher_id'],
+            Constants::COLUMN_NAME => 'TEST',
+            Constants::COLUMN_MARK => 85
+        ]);
+        $this->mockStatement->method('execute')->willReturn(true);
+
+        $this->teacherModel->updateStudent($id, $name, $email, $mark, $subjectCode);
+        $this->assertTrue(true); // No exceptions mean success
+    }
+
+    public function testUpdateStudentFailure()
+    {
+        $id = 1;
+        $name = 'Sara';
+        $email = 'test@test.com';
+        $mark = 90;
+        $subjectCode = 'SAS';
+        $this->mockStatement->method('execute')->willThrowException(new Exception("Database error"));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("Message: Database error");
+
+        $this->teacherModel->updateStudent($id, $name, $email, $mark, $subjectCode);
+    }
+
     public function testDeleteStudent()
     {
         $id = 1;
