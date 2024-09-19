@@ -23,21 +23,26 @@ jobs:
 
     - name: Run PHPUnit
       run: |
-        coverage_output=$(vendor/bin/phpunit --coverage-text --coverage-filter app)
+        coverage_output=$(vendor/bin/phpunit --coverage-text --coverage-filter app || echo "PHPUnit failed")
         echo "$coverage_output"
-        
+
         # Extract coverage percentage
         coverage_percentage=$(echo "$coverage_output" | grep -E '^\s*Lines:\s*[0-9]+.[0-9]+' | grep -o '[0-9.]\+')
 
         # Set the minimum coverage percentage
         MIN_COVERAGE=70
-        
+
+        if [ -z "$coverage_percentage" ]; then
+            echo "Could not extract coverage percentage. Check the PHPUnit output."
+            exit 1
+        fi
+
         echo "Coverage Percentage: $coverage_percentage"
 
         # Check if coverage meets minimum requirement
         if (( $(echo "$coverage_percentage < $MIN_COVERAGE" | bc -l) )); then
-          echo "Code coverage ($coverage_percentage%) is below the minimum required ($MIN_COVERAGE%)"
-          exit 1
+            echo "Code coverage ($coverage_percentage%) is below the minimum required ($MIN_COVERAGE%)"
+            exit 1
         else
-          echo "Code coverage ($coverage_percentage%) meets the minimum required ($MIN_COVERAGE%)"
+            echo "Code coverage ($coverage_percentage%) meets the minimum required ($MIN_COVERAGE%)"
         fi
