@@ -22,4 +22,22 @@ jobs:
       run: composer install --no-progress --no-suggest --prefer-dist --no-interaction
 
     - name: Run PHPUnit
-      run: vendor/bin/phpunit --coverage-text --coverage-filter app --min-coverage 70
+      run: |
+        coverage_output=$(vendor/bin/phpunit --coverage-text --coverage-filter app)
+        echo "$coverage_output"
+        
+        # Extract coverage percentage
+        coverage_percentage=$(echo "$coverage_output" | grep -E '^\s*Lines:\s*[0-9]+.[0-9]+' | grep -o '[0-9.]\+')
+
+        # Set the minimum coverage percentage
+        MIN_COVERAGE=70
+        
+        echo "Coverage Percentage: $coverage_percentage"
+
+        # Check if coverage meets minimum requirement
+        if (( $(echo "$coverage_percentage < $MIN_COVERAGE" | bc -l) )); then
+          echo "Code coverage ($coverage_percentage%) is below the minimum required ($MIN_COVERAGE%)"
+          exit 1
+        else
+          echo "Code coverage ($coverage_percentage%) meets the minimum required ($MIN_COVERAGE%)"
+        fi
