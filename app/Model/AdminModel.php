@@ -48,6 +48,7 @@ class AdminModel
                     $connection->commit();
                 } else {
                     $connection->rollback();
+
                     return false;
                 }
                 if (! $result) {
@@ -122,6 +123,7 @@ class AdminModel
                         $statement->execute();
                     } else {
                         $connection->rollback();
+
                         return Constants::EXCEPTION_NAME_LENGTH;
                     }
                 } catch (Exception $e) {
@@ -150,6 +152,7 @@ class AdminModel
         $subjects->bindParam(':code', $_code);
         $subjects->execute();
         $row = $subjects->fetch(PDO::FETCH_ASSOC);
+
         return $row[$columnSubjectName];
     }
 
@@ -196,6 +199,7 @@ class AdminModel
                         $statement->execute();
                     } else {
                         $connection->rollback();
+
                         return Constants::EXCEPTION_NAME_LENGTH;
                     }
                 } catch (Exception $e) {

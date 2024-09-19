@@ -48,6 +48,7 @@ class TeacherModel
                     $connection->commit();
                 } else {
                     $connection->rollback();
+
                     return false;
                 }
                 if (! $result) {
@@ -102,6 +103,7 @@ class TeacherModel
             $result = $connection->prepare("SELECT * FROM students WHERE id = :id");
             $result->bindParam(':id', $_id);
             $result->execute();
+
             return $result->fetch(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             throw new Exception("Message: " . $e->getMessage());
@@ -199,6 +201,7 @@ class TeacherModel
             $result->bindParam(':id', $_id);
             $result->execute();
             $connection->commit();
+
             return true;
         } catch (Exception $e) {
             throw new Exception("Message: " . $e->getMessage());
@@ -236,6 +239,7 @@ class TeacherModel
             $result->bindParam(':teacherId', $_teacherId);
             $result->execute();
             $connection->commit();
+
             return $result->fetch($_fetch_type);
         } catch (Exception $e) {
             throw new Exception("Message: " . $e->getMessage());
@@ -267,6 +271,7 @@ class TeacherModel
 
             if (isset($row[$columnEmail]) && $row[$columnEmail] == $_email) {
                 $this->updateStudentMark($_email, $_mark, $_subjectCode, $teacherId);
+
                 return [true, $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)];
             }
             $connection->beginTransaction();
