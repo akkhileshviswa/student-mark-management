@@ -8,7 +8,7 @@
         </testsuite>
     </testsuites>
     <coverage>
-        <include processUncoveredFiles="true">
+        <include>
             <directory>app</directory>
         </include>
     </coverage>
