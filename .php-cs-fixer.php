@@ -5,10 +5,10 @@ $finder = PhpCsFixer\Finder::create()
     ->name('*.php')
     ->exclude('vendor');
 
-return PhpCsFixer\Config::create()
+    return (new PhpCsFixer\Config())
     ->setRules([
-        '@PSR12' => true,
-        'array_syntax' => ['syntax' => 'short'],
-        // Add other rules you want here
+        '@PSR12' => true, // Apply PSR-12 coding standard
+        'array_syntax' => ['syntax' => 'short'], // Short array syntax rule
+        // Add other rules as needed
     ])
     ->setFinder($finder);
