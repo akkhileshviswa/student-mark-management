@@ -15,9 +15,12 @@ class AdminModel
     /** @var Database */
     private $instance;
 
-    public function __construct()
+    /**
+     * AdminModel Constructor
+     */
+    public function __construct(Database $database = null)
     {
-        $this->instance = Database::getInstance();
+        $this->instance = $database ? $database : Database::getInstance();
     }
 
     /**
@@ -26,7 +29,7 @@ class AdminModel
      */
     public function signIn()
     {
-        if ($_SERVER['REQUEST_METHOD'] == "POST" && ! empty($_POST['username']) &&
+        if ($_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST && ! empty($_POST['username']) &&
             ! empty($_POST['password'])) {
             $connection = $this->instance->getConnection();
             $name = trim($_POST['username']);
@@ -93,7 +96,7 @@ class AdminModel
      */
     public function addSubject()
     {
-        if ($_SERVER['REQUEST_METHOD'] == "POST" && ! empty($_POST['subject_code']) &&
+        if ($_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST && ! empty($_POST['subject_code']) &&
             ! empty($_POST['subject_name'])) {
             $connection = $this->instance->getConnection();
             $subjectCode = strtoupper(trim($_POST['subject_code']));
@@ -153,7 +156,7 @@ class AdminModel
         $subjects->execute();
         $row = $subjects->fetch(PDO::FETCH_ASSOC);
 
-        return $row[$columnSubjectName];
+        return $row[$columnSubjectName] ?? '';
     }
 
     /**
@@ -162,7 +165,7 @@ class AdminModel
      */
     public function addTeacher()
     {
-        if ($_SERVER['REQUEST_METHOD'] == "POST" && ! empty($_POST['name']) &&
+        if ($_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST && ! empty($_POST['name']) &&
             ! empty($_POST['username']) && ! empty($_POST['password']) && ! empty($_POST['subject_code'])) {
             $connection = $this->instance->getConnection();
             $subjectCode = json_encode($_POST['subject_code']);

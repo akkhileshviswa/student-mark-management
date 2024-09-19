@@ -6,11 +6,17 @@ use App\Model\AdminModel;
 use App\Core\Constants;
 use App\Core\Routes;
 
+/**
+ * Admin Controller Functions
+ */
 class AdminController
 {
     /** @var AdminModel */
     private $adminModel;
 
+    /**
+     * AdminController Constructor
+     */
     public function __construct()
     {
         $this->adminModel = new AdminModel();

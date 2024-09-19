@@ -7,6 +7,10 @@ namespace App\Core;
  */
 class Constants
 {
+    /** @var httpmethods */
+    public const HTTP_GET = 'GET';
+    public const HTTP_POST = 'POST';
+
     /** @var string table names */
     public const TABLE_NAME_ADMIN = 'admin';
     public const TABLE_NAME_TEACHERS = 'teachers';

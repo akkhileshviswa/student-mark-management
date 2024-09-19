@@ -15,9 +15,12 @@ class TeacherModel
     /** @var Database */
     private $instance;
 
-    public function __construct()
+    /**
+     * TeacherModel Constructor
+     */
+    public function __construct(Database $database = null)
     {
-        $this->instance = Database::getInstance();
+        $this->instance = $database ? $database : Database::getInstance();
     }
 
     /**
@@ -26,7 +29,7 @@ class TeacherModel
      */
     public function signIn()
     {
-        if ($_SERVER['REQUEST_METHOD'] == "POST" && ! empty($_POST['username']) &&
+        if ($_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST && ! empty($_POST['username']) &&
             ! empty($_POST['password'])) {
             $connection = $this->instance->getConnection();
             $name = trim($_POST['username']);
@@ -272,7 +275,10 @@ class TeacherModel
             if (isset($row[$columnEmail]) && $row[$columnEmail] == $_email) {
                 $this->updateStudentMark($_email, $_mark, $_subjectCode, $teacherId);
 
-                return [true, $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)];
+                return [
+                    true,
+                    $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)
+                ];
             }
             $connection->beginTransaction();
             $statement =  $connection->prepare(
@@ -288,7 +294,10 @@ class TeacherModel
             $statement->execute();
             $connection->commit();
 
-            return [true, $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)];
+            return [
+                true,
+                $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)
+            ];
         } catch (Exception $e) {
             throw new Exception("Message: " . $e->getMessage());
         }

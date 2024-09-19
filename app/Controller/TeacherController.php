@@ -7,11 +7,20 @@ use App\Core\Routes;
 use App\Model\AdminModel;
 use App\Model\TeacherModel;
 
+/**
+ * Teacher Controller Functions
+ */
 class TeacherController
 {
+    /** @var AdminModel */
+    private $adminModel;
+
     /** @var TeacherModel */
     private $teacherModel;
 
+    /**
+     * TeacherController Constructor
+     */
     public function __construct()
     {
         $this->adminModel = new AdminModel();
@@ -92,7 +101,7 @@ class TeacherController
                 $response['success'] = false;
                 $message = $response['error'] = 'Enter valid email!';
             }
-            if ($_SERVER['REQUEST_METHOD'] == "POST" && ! empty($name) && ! empty($email) &&
+            if ($_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST && ! empty($name) && ! empty($email) &&
                 ! empty($mark) && ! empty($subjectCode) && empty($message)) {
                 [$result, $student] = $this->teacherModel->addStudent($name, $email, $mark, $subjectCode);
                 $student->subject_name = $this->adminModel->getSubjectName($subjectCode);
@@ -120,8 +129,9 @@ class TeacherController
         $email = trim($_POST['email']);
         $mark = trim($_POST['marks']);
         $subjectCode = trim($_POST['subject_code']);
-        if ($_SESSION['teacherloggedin'] && $_SERVER['REQUEST_METHOD'] == "POST" && ! empty($id
-            && ! empty($name)) && ! empty($email) && ! empty($mark) && ! empty($subjectCode)) {
+        if ($_SESSION['teacherloggedin'] && $_SERVER['REQUEST_METHOD'] == Constants::HTTP_POST &&
+            ! empty($id) && ! empty($name) && ! empty($email) && ! empty($mark) &&
+            ! empty($subjectCode)) {
             $result = $this->teacherModel->updateStudent($id, $name, $email, $mark, $subjectCode);
             if ($result == Constants::EXCEPTION_UNIQUE) {
                 $_SESSION['error_message'] = "Already a student exists with same details. Update values!";
@@ -143,7 +153,8 @@ class TeacherController
     public function deleteStudent()
     {
         $id = trim($_GET['id']);
-        if ($_SESSION['teacherloggedin'] && $_SERVER['REQUEST_METHOD'] == "GET" && ! empty($id)) {
+        if ($_SESSION['teacherloggedin'] && $_SERVER['REQUEST_METHOD'] == Constants::HTTP_GET &&
+            ! empty($id)) {
             $this->teacherModel->deleteStudent($id);
             $this->teacherModel->loadDashboard();
             Routes::load("TeacherDashboard");
