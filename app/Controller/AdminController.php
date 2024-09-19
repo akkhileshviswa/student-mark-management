@@ -17,9 +17,18 @@ class AdminController
     /**
      * AdminController Constructor
      */
-    public function __construct()
+    public function __construct(AdminModel $_adminModel = null)
     {
-        $this->adminModel = new AdminModel();
+        $this->adminModel = $_adminModel ?? new AdminModel();
+    }
+
+    /**
+     * This function will load the view files based on the input
+     * @param string $_viewName
+     */
+    protected function loadView($_viewName)
+    {
+        Routes::load($_viewName);
     }
 
     /**
@@ -29,7 +38,7 @@ class AdminController
     public function loadLogin()
     {
         $_SESSION['adminloggedin'] = 0;
-        Routes::load('AdminLogin');
+        $this->loadView('AdminLogin');
     }
 
     /**
@@ -43,10 +52,10 @@ class AdminController
         if ($result) {
             $_SESSION['adminloggedin'] = 1;
             $this->adminModel->loadAdminDashboard();
-            Routes::load("AdminDashboard");
+            $this->loadView("AdminDashboard");
         } else {
             $_SESSION['error_message'] = "Username or Password is incorrect!!";
-            Routes::load("AdminLogin");
+            $this->loadView("AdminLogin");
         }
     }
 
@@ -58,7 +67,7 @@ class AdminController
     {
         if ($_SESSION['adminloggedin']) {
             $this->adminModel->loadAdminDashboard();
-            Routes::load('AdminDashboard');
+            $this->loadView('AdminDashboard');
         } else {
             $_SESSION['error_message'] = "Login to continue!!";
             $this->loadLogin();
@@ -74,7 +83,7 @@ class AdminController
         if ($_SESSION['adminloggedin']) {
             $_SESSION['addSubject'] = 1;
             $_SESSION['addTeacher'] = 0;
-            Routes::load('AdminAddSubjectTeacherForm');
+            $this->loadView('AdminAddSubjectTeacherForm');
         } else {
             $_SESSION['error_message'] = "Login to continue!!";
             $this->loadLogin();
@@ -90,7 +99,7 @@ class AdminController
         if ($_SESSION['adminloggedin']) {
             $_SESSION['addTeacher'] = 1;
             $_SESSION['addSubject'] = 0;
-            Routes::load('AdminAddSubjectTeacherForm');
+            $this->loadView('AdminAddSubjectTeacherForm');
         } else {
             $_SESSION['error_message'] = "Login to continue!!";
             $this->loadLogin();
@@ -116,7 +125,7 @@ class AdminController
                 break;
 
             default:
-                $success_message = 'Subject has been created successfully';
+                $success_message = 'Teacher has been created successfully';
         }
 
         if ($error_message) {

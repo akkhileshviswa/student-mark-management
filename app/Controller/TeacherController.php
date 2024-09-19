@@ -21,10 +21,19 @@ class TeacherController
     /**
      * TeacherController Constructor
      */
-    public function __construct()
+    public function __construct(AdminModel $_adminModel = null, TeacherModel $_teacherModel = null)
     {
-        $this->adminModel = new AdminModel();
-        $this->teacherModel = new TeacherModel();
+        $this->adminModel = $_adminModel ?? new AdminModel();
+        $this->teacherModel = $_teacherModel ?? new TeacherModel();
+    }
+
+    /**
+     * This function will load the view files based on the input
+     * @param string $_viewName
+     */
+    protected function loadView($_viewName)
+    {
+        Routes::load($_viewName);
     }
 
     /**
@@ -34,7 +43,7 @@ class TeacherController
     public function loadLogin()
     {
         $_SESSION['teacherloggedin'] = 0;
-        Routes::load('TeacherLogin');
+        $this->loadView("TeacherLogin");
     }
 
     /**
@@ -48,7 +57,7 @@ class TeacherController
         if ($result) {
             $_SESSION['teacherloggedin'] = 1;
             $this->teacherModel->loadDashboard();
-            Routes::load("TeacherDashboard");
+            $this->loadView("TeacherDashboard");
         } else {
             $_SESSION['error_message'] = "Username or Password is incorrect!!";
             $this->loadLogin();
@@ -63,7 +72,7 @@ class TeacherController
     {
         if ($_SESSION['teacherloggedin']) {
             $this->teacherModel->loadDashboard();
-            Routes::load("TeacherDashboard");
+            $this->loadView("TeacherDashboard");
         } else {
             $_SESSION['error_message'] = "Login to continue";
             $this->loadLogin();
@@ -78,7 +87,7 @@ class TeacherController
     {
         if ($_SESSION['teacherloggedin'] && ! empty($_GET['student_id'])) {
             $_SESSION['update_student'] = $this->teacherModel->getStudentById($_GET['student_id']);
-            Routes::load("TeacherEditStudent");
+            $this->loadView("TeacherEditStudent");
         } else {
             $_SESSION['error_message'] = "Login to continue";
             $this->loadLogin();
@@ -139,7 +148,7 @@ class TeacherController
                 $_SESSION['success_message'] = "Student updated successfully!";
             }
             $this->teacherModel->loadDashboard();
-            Routes::load("TeacherDashboard");
+            $this->loadView("TeacherDashboard");
         } else {
             $_SESSION['error_message'] = "Login to continue";
             $this->loadLogin();
@@ -157,7 +166,7 @@ class TeacherController
             ! empty($id)) {
             $this->teacherModel->deleteStudent($id);
             $this->teacherModel->loadDashboard();
-            Routes::load("TeacherDashboard");
+            $this->loadView("TeacherDashboard");
         } else {
             $_SESSION['error_message'] = "Login to continue";
             $this->loadLogin();

@@ -18,9 +18,9 @@ class AdminModel
     /**
      * AdminModel Constructor
      */
-    public function __construct(Database $database = null)
+    public function __construct(Database $_database = null)
     {
-        $this->instance = $database ? $database : Database::getInstance();
+        $this->instance = $_database ?? Database::getInstance();
     }
 
     /**
