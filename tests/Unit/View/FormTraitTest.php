@@ -49,6 +49,7 @@ class FormTraitTest extends TestCase
 
     public function testGetMessages()
     {
+        $_SESSION['error_message'] = null;
         $_SESSION['success_message'] = 'Test';
         ob_start();
         $this->formTrait->getMessages();

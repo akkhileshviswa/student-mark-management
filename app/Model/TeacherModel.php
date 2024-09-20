@@ -172,7 +172,7 @@ class TeacherModel
         try {
             $connection = $this->instance->getConnection();
             $row = $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $_SESSION['teacher_id']);
-            if (! empty($row) && $row[$columnId] != $_id) {
+            if (! empty($row) && isset($row[$columnId]) && $row[$columnId] != $_id) {
                 return Constants::EXCEPTION_UNIQUE;
             }
             $connection->beginTransaction();
