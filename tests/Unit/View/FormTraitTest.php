@@ -14,7 +14,7 @@ class FormTraitTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->formTrait = new class {
+        $this->formTrait = new class () {
             use FormTrait;
         };
     }
