@@ -81,16 +81,14 @@ trait FormTrait
 
     public function getMessages()
     {
-        echo '
-        <?php if (isset($_SESSION["error_message"])): ?>
-            <span id="error_message">
-            ' . htmlspecialchars($_SESSION["error_message"]) . '
-            </span>
-        <?php elseif (isset($_SESSION["success_message"])): ?>
-            <span id="success_message">
-            ' . htmlspecialchars($_SESSION["success_message"]) . '
-            </span>
-        <?php endif; ?>
-        ';
+        $message = '';
+
+        if (isset($_SESSION["error_message"]) && !empty($_SESSION["error_message"])) {
+            $message = '<span id="error_message">' . htmlspecialchars($_SESSION["error_message"]) . '</span>';
+        } elseif (isset($_SESSION["success_message"]) && !empty($_SESSION["success_message"])) {
+            $message = '<span id="success_message">' . htmlspecialchars($_SESSION["success_message"]) . '</span>';
+        }
+
+        echo $message;
     }
 }

@@ -143,6 +143,10 @@ class TeacherModel
             $result->execute();
             $connection->commit();
         } catch (Exception $e) {
+            if ($connection->inTransaction()) {
+                $connection->rollBack();
+            }
+
             throw new Exception("Message: " . $e->getMessage());
         }
     }
@@ -168,7 +172,7 @@ class TeacherModel
         try {
             $connection = $this->instance->getConnection();
             $row = $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $_SESSION['teacher_id']);
-            if (! empty($row) && $row[$columnName] == $_name && $row[$columnMark] == $_mark) {
+            if (! empty($row) && $row[$columnId] != $_id) {
                 return Constants::EXCEPTION_UNIQUE;
             }
             $connection->beginTransaction();
@@ -182,7 +186,13 @@ class TeacherModel
 
             $result->execute();
             $connection->commit();
+
+            return true;
         } catch (Exception $e) {
+            if ($connection->inTransaction()) {
+                $connection->rollBack();
+            }
+
             throw new Exception("Message: " . $e->getMessage());
         }
     }
@@ -207,6 +217,10 @@ class TeacherModel
 
             return true;
         } catch (Exception $e) {
+            if ($connection->inTransaction()) {
+                $connection->rollBack();
+            }
+
             throw new Exception("Message: " . $e->getMessage());
         }
     }
@@ -245,6 +259,10 @@ class TeacherModel
 
             return $result->fetch($_fetch_type);
         } catch (Exception $e) {
+            if ($connection->inTransaction()) {
+                $connection->rollBack();
+            }
+
             throw new Exception("Message: " . $e->getMessage());
         }
     }
@@ -299,6 +317,10 @@ class TeacherModel
                 $this->getStudentByEmailAndTeacherIdAndSubject($_email, $_subjectCode, $teacherId, PDO::FETCH_OBJ)
             ];
         } catch (Exception $e) {
+            if ($connection->inTransaction()) {
+                $connection->rollBack();
+            }
+
             throw new Exception("Message: " . $e->getMessage());
         }
     }

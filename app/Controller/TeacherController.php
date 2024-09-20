@@ -155,9 +155,9 @@ class TeacherController
             ! empty($id) && ! empty($name) && ! empty($email) && ! empty($mark) &&
             ! empty($subjectCode)) {
             $result = $this->teacherModel->updateStudent($id, $name, $email, $mark, $subjectCode);
-            if ($result == Constants::EXCEPTION_UNIQUE) {
+            if ($result === Constants::EXCEPTION_UNIQUE) {
                 $_SESSION['error_message'] = "Already a student exists with same details. Update values!";
-            } else {
+            } elseif ($result) {
                 $_SESSION['success_message'] = "Student updated successfully!";
             }
             $this->teacherModel->loadDashboard();

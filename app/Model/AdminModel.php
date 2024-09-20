@@ -47,14 +47,11 @@ class AdminModel
                 $result->bindParam(':name', $name);
                 $result->bindParam(':password', $password);
                 $result->execute();
-                if ($name != "") {
-                    $connection->commit();
-                } else {
-                    $connection->rollback();
-
-                    return false;
-                }
                 if (! $result) {
+                    if ($connection->inTransaction()) {
+                        $connection->rollBack();
+                    }
+
                     throw new Exception("Error in Selecting the user.");
                 }
             } catch (Exception $e) {
@@ -130,6 +127,10 @@ class AdminModel
                         return Constants::EXCEPTION_NAME_LENGTH;
                     }
                 } catch (Exception $e) {
+                    if ($connection->inTransaction()) {
+                        $connection->rollBack();
+                    }
+
                     throw new Exception("Message: " . $e->getMessage());
                 }
             }
@@ -206,6 +207,10 @@ class AdminModel
                         return Constants::EXCEPTION_NAME_LENGTH;
                     }
                 } catch (Exception $e) {
+                    if ($connection->inTransaction()) {
+                        $connection->rollBack();
+                    }
+
                     throw new Exception("Message: " . $e->getMessage());
                 }
             }
