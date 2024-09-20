@@ -40,7 +40,7 @@ $dashboard->renderDashboardHeader();
                             <input type="hidden" id="student_id" name="student_id" value="<?= $student['id'];?>" >
                             <input type="submit" class="btn" value="Edit">
                         </form><br>
-                        <a href="/deleteStudent?id=<?= $student['id']?>" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="/deleteStudent?id=<?= htmlspecialchars($student['id']); ?>" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

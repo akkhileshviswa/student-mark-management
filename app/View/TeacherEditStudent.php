@@ -39,7 +39,8 @@ $student = $_SESSION['update_student']; ?>
                 <option value="<?= htmlspecialchars($subject_code); ?>">
                     <?= ucfirst($dashboard->getSubjectName($subject_code)); ?>
                 </option>
-            <?php endif; ?>
+            <?php endif;
+            endforeach; ?>
         </select><br>
 
         <label for="marks">Marks:</label>
@@ -48,7 +49,6 @@ $student = $_SESSION['update_student']; ?>
 
         <button type="submit" class="btn-add">Save</button>
     </form>
-    <?php endforeach; ?>
     </div>
 </div>
 </body>
