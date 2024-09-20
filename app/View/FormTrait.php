@@ -78,4 +78,19 @@ trait FormTrait
 
         return $model->getSubjectName($_code);
     }
+
+    public function getMessages()
+    {
+        echo '
+        <?php if (isset($_SESSION["error_message"])): ?>
+            <span id="error_message">
+            ' . htmlspecialchars($_SESSION["error_message"]) . '
+            </span>
+        <?php elseif (isset($_SESSION["success_message"])): ?>
+            <span id="success_message">
+            ' . htmlspecialchars($_SESSION["success_message"]) . '
+            </span>
+        <?php endif; ?>
+        ';
+    }
 }

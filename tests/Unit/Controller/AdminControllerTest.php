@@ -18,11 +18,14 @@ class AdminControllerTest extends TestCase
      */
     protected function setUp(): void
     {
+        $_SESSION['error_message'] = null;
+        $_SESSION['success_message'] = null;
+
         $this->adminModelMock = $this->createMock(AdminModel::class);
 
         $this->adminController = $this->getMockBuilder(AdminController::class)
             ->setConstructorArgs([$this->adminModelMock])
-            ->onlyMethods(['loadView'])
+            ->onlyMethods(['loadView', 'clearMessages'])
             ->getMock();
     }
 
@@ -39,9 +42,8 @@ class AdminControllerTest extends TestCase
     /**
      * @dataProvider signInProvider
      */
-    public function testSignIn($signInResult, $loggedIn, $expectedRoute)
+    public function testSignIn($signInResult, $loggedIn, $expectedErrorMessage)
     {
-        $_SESSION['error_message'] = null;
         $_SESSION['adminloggedin'] = 0;
         $this->adminModelMock->method('signIn')->willReturn($signInResult);
 
@@ -51,15 +53,15 @@ class AdminControllerTest extends TestCase
         if ($signInResult) {
             $this->assertEquals(null, $_SESSION['error_message']);
         } else {
-            $this->assertEquals('Username or Password is incorrect!!', $_SESSION['error_message']);
+            $this->assertEquals($expectedErrorMessage, $_SESSION['error_message']);
         }
     }
 
     public function signInProvider()
     {
         return [
-            'login success' => [true, 1, 'AdminDashboard'],
-            'login failure' => [false, 0, 'AdminLogin']
+            'login success' => [true, 1, null],
+            'login failure' => [false, 0, 'Username or Password is incorrect!!']
         ];
     }
 

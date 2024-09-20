@@ -12,6 +12,7 @@ $loginForm->renderHeader();
     <form class="login-form" action="home" method="POST" onsubmit="return loginvalidate();" 
         autocomplete="off">
         <h2>Teacher Login</h2>
+        <?php $loginForm->getMessages(); ?>
 
 <?php
 $loginForm->renderLoginForm();

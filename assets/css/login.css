@@ -84,11 +84,32 @@ input[type="submit"]:hover {
     background-color: #555;
 }
 
-#usernameerr, #passworderr {
+#error_message, #usernameerr, #passworderr {
     color: red;
 }
 
+#success_message {
+    color: green;
+}
+
 .home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.message-container {
+    flex-grow: 1;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+}
+
+.button-container {
+    display: flex;
+}
+
+.home-form-container {
     display: flex;
     justify-content: flex-end;
 }

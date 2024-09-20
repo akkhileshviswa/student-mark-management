@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (existingRow) {
             existingRow.querySelector('.student-marks').textContent = student.mark;
         } else {
+            var noDataMessage = document.getElementById('no_data_message');
+            if (noDataMessage) {
+                noDataMessage.style.display = 'none';
+            }
             const newRow = document.createElement('tr');
             newRow.setAttribute('data-name', student.name);
             newRow.setAttribute('data-email', student.email);

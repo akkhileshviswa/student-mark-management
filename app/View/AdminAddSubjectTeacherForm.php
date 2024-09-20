@@ -8,7 +8,7 @@ $dashboard = new AdminDashboard();
 $dashboard->renderDashboardHeader();
 ?>
 
-    <div class="home-container">
+    <div class="home-form-container">
         <a href="list" class="head-home">HOME</a>
         <a href="logout" class="head-home">LOGOUT</a>
     </div>

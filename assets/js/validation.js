@@ -20,7 +20,7 @@ function loginvalidate()
         return loginerror == "" ? true : false;
     }
 
-    function loginpassword() 
+    function loginpassword()
     {
         var password = document.getElementById("password").value;
         var loginerror = "";
@@ -32,3 +32,14 @@ function loginvalidate()
         return loginerror == "" ? true : false;
     }
 }
+
+setTimeout(function() {
+    var successMessage = document.getElementById('success_message');
+    var errorMessage = document.getElementById('error_message');
+
+    if (successMessage) {
+        successMessage.style.display = 'none';
+    } else if (errorMessage) {
+        errorMessage.style.display = 'none';
+    }
+}, 3000);

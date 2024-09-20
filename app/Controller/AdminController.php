@@ -32,6 +32,14 @@ class AdminController
     }
 
     /**
+     * This function will clear the session messages
+     */
+    protected function clearMessages()
+    {
+        Routes::clearMessages();
+    }
+
+    /**
      * This method loads login page on get request.
      * @return null
      */
@@ -48,6 +56,7 @@ class AdminController
      */
     public function signIn()
     {
+        $this->clearMessages();
         $result = $this->adminModel->signIn();
         if ($result) {
             $_SESSION['adminloggedin'] = 1;
@@ -61,10 +70,14 @@ class AdminController
 
     /**
      * This method loads admin dashboard on get request.
+     * @param string $_clearMessage
      * @return null
      */
-    public function loadDashboard()
+    public function loadDashboard($_clearMessage = true)
     {
+        if ($_clearMessage) {
+            $this->clearMessages();
+        }
         if ($_SESSION['adminloggedin']) {
             $this->adminModel->loadAdminDashboard();
             $this->loadView('AdminDashboard');
@@ -80,6 +93,7 @@ class AdminController
      */
     public function loadSubjectForm()
     {
+        $this->clearMessages();
         if ($_SESSION['adminloggedin']) {
             $_SESSION['addSubject'] = 1;
             $_SESSION['addTeacher'] = 0;
@@ -96,6 +110,7 @@ class AdminController
      */
     public function loadTeacherForm()
     {
+        $this->clearMessages();
         if ($_SESSION['adminloggedin']) {
             $_SESSION['addTeacher'] = 1;
             $_SESSION['addSubject'] = 0;
@@ -112,6 +127,7 @@ class AdminController
      */
     public function addTeacher()
     {
+        $this->clearMessages();
         $success_message = $error_message = '';
         $result = $this->adminModel->addTeacher();
         switch ($result) {
@@ -134,7 +150,7 @@ class AdminController
             $_SESSION['success_message'] = $success_message;
         }
 
-        $this->loadDashboard();
+        $this->loadDashboard(false);
     }
 
     /**
@@ -143,6 +159,7 @@ class AdminController
      */
     public function addSubject()
     {
+        $this->clearMessages();
         $success_message = $error_message = '';
         $result = $this->adminModel->addSubject();
         switch ($result) {
@@ -165,6 +182,6 @@ class AdminController
             $_SESSION['success_message'] = $success_message;
         }
 
-        $this->loadDashboard();
+        $this->loadDashboard(false);
     }
 }

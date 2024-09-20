@@ -10,15 +10,14 @@ $dashboard = new TeacherEditStudent();
 $dashboard->renderDashboardHeader();
 ?>
 
-    <div class="home-container">
+    <div class="home-form-container">
         <a href="dashboard" class="head-home">HOME</a>
         <a href="teacherLogout" class="head-home">LOGOUT</a>
     </div>
     <?php if (empty($_SESSION['update_student'])) {
         Routes::load('TeacherDashboard');
     }
-$student = $_SESSION['update_student'];
-?>
+    $student = $_SESSION['update_student']; ?>
     <form id="forms" method="POST" action="editStudent">
         <h2>Edit Student</h2>
         <input type="hidden" id="student_id" name="student_id" value="<?= $student['id'];?>" >

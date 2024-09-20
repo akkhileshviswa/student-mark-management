@@ -37,6 +37,14 @@ class TeacherController
     }
 
     /**
+     * This function will clear the session messages
+     */
+    protected function clearMessages()
+    {
+        Routes::clearMessages();
+    }
+
+    /**
      * This method loads login page on get request.
      * @return null
      */
@@ -53,6 +61,7 @@ class TeacherController
      */
     public function signIn()
     {
+        $this->clearMessages();
         $result = $this->teacherModel->signIn();
         if ($result) {
             $_SESSION['teacherloggedin'] = 1;
@@ -70,6 +79,7 @@ class TeacherController
      */
     public function loadDashboard()
     {
+        $this->clearMessages();
         if ($_SESSION['teacherloggedin']) {
             $this->teacherModel->loadDashboard();
             $this->loadView("TeacherDashboard");
@@ -85,6 +95,7 @@ class TeacherController
      */
     public function loadEditStudent()
     {
+        $this->clearMessages();
         if ($_SESSION['teacherloggedin'] && ! empty($_GET['student_id'])) {
             $_SESSION['update_student'] = $this->teacherModel->getStudentById($_GET['student_id']);
             $this->loadView("TeacherEditStudent");
@@ -100,6 +111,7 @@ class TeacherController
      */
     public function addStudent()
     {
+        $this->clearMessages();
         if ($_SESSION['teacherloggedin']) {
             $name = trim($_POST['name']);
             $email = trim($_POST['email']);
@@ -133,6 +145,7 @@ class TeacherController
      */
     public function updateStudent()
     {
+        $this->clearMessages();
         $id = trim($_POST['student_id']);
         $name = trim($_POST['name']);
         $email = trim($_POST['email']);
@@ -161,10 +174,12 @@ class TeacherController
      */
     public function deleteStudent()
     {
+        $this->clearMessages();
         $id = trim($_GET['id']);
         if ($_SESSION['teacherloggedin'] && $_SERVER['REQUEST_METHOD'] == Constants::HTTP_GET &&
             ! empty($id)) {
             $this->teacherModel->deleteStudent($id);
+            $_SESSION['success_message'] = "Student deleted successfully!";
             $this->teacherModel->loadDashboard();
             $this->loadView("TeacherDashboard");
         } else {

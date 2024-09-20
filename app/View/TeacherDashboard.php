@@ -9,8 +9,13 @@ $dashboard->renderDashboardHeader();
 ?>
 
     <div class="home-container">
-        <a href="dashboard" class="head-home">HOME</a>
-        <a href="teacherLogout" class="head-home">LOGOUT</a>
+        <div class="message-container">
+            <?php $dashboard->getMessages(); ?>
+        </div>
+        <div class="button-container">
+            <a href="dashboard" class="head-home">HOME</a>
+            <a href="teacherLogout" class="head-home">LOGOUT</a>
+        </div>
     </div>
     <h3>Welcome <?= ucfirst($_SESSION['teacher_name']); ?></h3>
     <table id="studentTable">
@@ -40,7 +45,7 @@ $dashboard->renderDashboardHeader();
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
-            <tr><td colspan="5">No students data available yet.</td></tr>
+            <tr id = 'no_data_message'><td colspan="5">No students data available yet.</td></tr>
         <?php endif; ?>
     </table>
     <button id="openPopup" class="btn-add">Add Student</button>

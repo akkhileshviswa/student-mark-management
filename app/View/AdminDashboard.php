@@ -8,8 +8,13 @@ $dashboard = new AdminDashboard();
 $dashboard->renderDashboardHeader();
 ?>
     <div class="home-container">
-        <a href="list" class="head-home">HOME</a>
-        <a href="logout" class="head-home">LOGOUT</a>
+        <div class="message-container">
+            <?php $dashboard->getMessages(); ?>
+        </div>
+        <div class="button-container">
+            <a href="list" class="head-home">HOME</a>
+            <a href="logout" class="head-home">LOGOUT</a>
+        </div>
     </div>
     <h2>Subject and Teacher Management</h2>
     <h3>Subjects</h3>
