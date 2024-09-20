@@ -14,7 +14,6 @@ class Layout
     {
         Routes::get(['url' => 'home', 'controller' => TeacherController::class, 'method' => 'loadLogin']);
         Routes::get(['url' => 'dashboard', 'controller' => TeacherController::class, 'method' => 'loadDashboard']);
-        // Routes::get(['url' => 'addStudent', 'controller' => TeacherController::class, 'method' => 'loadDashboard']);
         Routes::get(['url' => 'editStudent', 'controller' => TeacherController::class, 'method' => 'loadEditStudent']);
         Routes::get(['url' => 'teacherLogout', 'controller' => TeacherController::class, 'method' => 'loadLogin']);
         Routes::get(['url' => 'deleteStudent', 'controller' => TeacherController::class, 'method' => 'deleteStudent']);
