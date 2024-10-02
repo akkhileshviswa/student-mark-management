@@ -129,7 +129,7 @@ class AdminController
     {
         $this->clearMessages();
         $success_message = $error_message = '';
-        if ($_SESSION['adminloggedin']) {
+        if (isset($_SESSION['adminloggedin']) && ($_SESSION['adminloggedin'])) {
             $result = $this->adminModel->addTeacher();
             switch ($result) {
                 case Constants::EXCEPTION_UNIQUE:
@@ -166,7 +166,7 @@ class AdminController
     {
         $this->clearMessages();
         $success_message = $error_message = '';
-        if ($_SESSION['adminloggedin']) {
+        if (isset($_SESSION['adminloggedin']) && ($_SESSION['adminloggedin'])) {
             $result = $this->adminModel->addSubject();
             switch ($result) {
                 case Constants::EXCEPTION_UNIQUE:
