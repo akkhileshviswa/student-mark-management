@@ -136,6 +136,9 @@ class TeacherController
             }
 
             echo json_encode($response);
+        } else {
+            $_SESSION['error_message'] = "Login to continue";
+            $this->loadLogin();
         }
     }
 
