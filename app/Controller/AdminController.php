@@ -129,19 +129,24 @@ class AdminController
     {
         $this->clearMessages();
         $success_message = $error_message = '';
-        $result = $this->adminModel->addTeacher();
-        switch ($result) {
-            case Constants::EXCEPTION_UNIQUE:
-                $error_message = 'Username should be Unique!';
+        if ($_SESSION['adminloggedin']) {
+            $result = $this->adminModel->addTeacher();
+            switch ($result) {
+                case Constants::EXCEPTION_UNIQUE:
+                    $error_message = 'Username should be Unique!';
 
-                break;
-            case Constants::EXCEPTION_NAME_LENGTH:
-                $error_message = 'Username should be greater than 4 characters!';
+                    break;
+                case Constants::EXCEPTION_NAME_LENGTH:
+                    $error_message = 'Username should be greater than 4 characters!';
 
-                break;
+                    break;
 
-            default:
-                $success_message = 'Teacher has been created successfully';
+                default:
+                    $success_message = 'Teacher has been created successfully';
+            }
+        } else {
+            $_SESSION['error_message'] = "Login to continue!!";
+            $this->loadLogin();
         }
 
         if ($error_message) {
@@ -161,19 +166,24 @@ class AdminController
     {
         $this->clearMessages();
         $success_message = $error_message = '';
-        $result = $this->adminModel->addSubject();
-        switch ($result) {
-            case Constants::EXCEPTION_UNIQUE:
-                $error_message = 'Subject Code should be Unique!';
+        if ($_SESSION['adminloggedin']) {
+            $result = $this->adminModel->addSubject();
+            switch ($result) {
+                case Constants::EXCEPTION_UNIQUE:
+                    $error_message = 'Subject Code should be Unique!';
 
-                break;
-            case Constants::EXCEPTION_NAME_LENGTH:
-                $error_message = 'Subject Name should be greater than 4 characters!';
+                    break;
+                case Constants::EXCEPTION_NAME_LENGTH:
+                    $error_message = 'Subject Name should be greater than 4 characters!';
 
-                break;
+                    break;
 
-            default:
-                $success_message = 'Subject has been created successfully';
+                default:
+                    $success_message = 'Subject has been created successfully';
+            }
+        } else {
+            $_SESSION['error_message'] = "Login to continue!!";
+            $this->loadLogin();
         }
 
         if ($error_message) {
