@@ -18,7 +18,7 @@ $dashboard->renderDashboardHeader();
         Routes::load('TeacherDashboard');
     }
 $student = $_SESSION['update_student']; ?>
-    <form id="forms" method="POST" action="editStudent">
+    <form id="forms" method="POST" action="edit-student">
         <h2>Edit Student</h2>
         <input type="hidden" id="student_id" name="student_id" value="<?= $student['id'];?>" >
         <label for="name">Name:</label>

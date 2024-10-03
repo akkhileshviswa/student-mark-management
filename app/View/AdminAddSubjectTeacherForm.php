@@ -13,7 +13,7 @@ $dashboard->renderDashboardHeader();
         <a href="logout" class="head-home">LOGOUT</a>
     </div>
     <?php if ($_SESSION['addSubject']): ?>
-        <form method="POST" action="addSubject" id="forms">
+        <form method="POST" action="add-subject" id="forms">
             <h2>Add Subject</h2>
             <label for="subject_name">Subject Name:</label>
             <input type="text" name="subject_name" id="subject_name" required autocomplete=off
@@ -28,7 +28,7 @@ $dashboard->renderDashboardHeader();
     <?php endif; ?>
 
     <?php if ($_SESSION['addTeacher']): ?>
-        <form method="POST" action="addTeacher" id="forms">
+        <form method="POST" action="add-teacher" id="forms">
             <h2>Add Teacher</h2>
             <label for="name">Name:</label>
             <input type="text" name="name" id="name" required autocomplete=off

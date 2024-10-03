@@ -96,6 +96,10 @@ class TeacherController
     public function loadEditStudent()
     {
         $this->clearMessages();
+        if (! $this->teacherModel->isStudentCreatedByTeacher($_GET['student_id'])) {
+            $_SESSION['error_message'] = "You can't edit the student, since you didn't create it!";
+            $this->loadView("TeacherDashboard");
+        }
         if ($_SESSION['teacherloggedin'] && ! empty($_GET['student_id'])) {
             $_SESSION['update_student'] = $this->teacherModel->getStudentById($_GET['student_id']);
             $this->loadView("TeacherEditStudent");
@@ -160,6 +164,8 @@ class TeacherController
             $result = $this->teacherModel->updateStudent($id, $name, $email, $mark, $subjectCode);
             if ($result === Constants::EXCEPTION_UNIQUE) {
                 $_SESSION['error_message'] = "Already a student exists with same details. Update values!";
+            } elseif ($result === Constants::EXCEPTION_AUTHORIZATION_ERROR) {
+                $_SESSION['error_message'] = "You can't edit the student, since you didn't create it!";
             } elseif ($result) {
                 $_SESSION['success_message'] = "Student updated successfully!";
             }

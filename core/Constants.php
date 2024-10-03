@@ -31,4 +31,5 @@ class Constants
     /** @var int exception codes */
     public const EXCEPTION_UNIQUE = 100;
     public const EXCEPTION_NAME_LENGTH = 200;
+    public const EXCEPTION_AUTHORIZATION_ERROR = 300;
 }

@@ -36,11 +36,11 @@ $dashboard->renderDashboardHeader();
                     <td><?= ucfirst($dashboard->getSubjectName($student['subject_code'])); ?></td>
                     <td class="student-marks"><?= htmlspecialchars($student['mark']); ?></td>
                     <td>
-                        <form method="GET" action="editStudent">
+                        <form method="GET" action="edit-student">
                             <input type="hidden" id="student_id" name="student_id" value="<?= $student['id'];?>" >
                             <input type="submit" class="btn" value="Edit">
                         </form><br>
-                        <a href="/deleteStudent?id=<?= htmlspecialchars($student['id']); ?>" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="/delete-student?id=<?= htmlspecialchars($student['id']); ?>" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -34,7 +34,7 @@ $dashboard->renderDashboardHeader();
             <tr><td colspan="2">No subjects added yet.</td></tr>
         <?php endif; ?>
     </table>
-    <form method="GET" action="addSubject">
+    <form method="GET" action="add-subject">
         <input type="submit" class="btn" value="Add Subject">
     </form>
 
@@ -64,7 +64,7 @@ $dashboard->renderDashboardHeader();
         <?php endif; ?>
     </table>
     <?php if (! empty($_SESSION['subjects'])): ?>
-        <form method="GET" action="addTeacher">
+        <form method="GET" action="add-teacher">
             <input type="submit" class="btn" value="Add Teacher">
         </form>
     <?php endif; ?>

@@ -83,11 +83,13 @@ class TeacherModel
     {
         $connection = $this->instance->getConnection();
         $tableStudents = Constants::TABLE_NAME_STUDENTS;
-        $columnTeacherId = Constants::COLUMN_TEACHER_ID;
-        $teacherId = $_SESSION['teacher_id'];
+        // $columnTeacherId = Constants::COLUMN_TEACHER_ID;
+        // $teacherId = $_SESSION['teacher_id'];
 
-        $students = $connection->prepare("SELECT * FROM $tableStudents WHERE $columnTeacherId = :id;");
-        $students->bindParam(':id', $teacherId);
+        $students = $connection->prepare("SELECT * FROM $tableStudents");
+
+        // $students = $connection->prepare("SELECT * FROM $tableStudents WHERE $columnTeacherId = :id;");
+        // $students->bindParam(':id', $teacherId);
         $students->execute();
         $_SESSION['students'] = $students->fetchAll();
     }
@@ -168,6 +170,9 @@ class TeacherModel
         $columnMark = Constants::COLUMN_MARK;
         $columnEmail = Constants::COLUMN_EMAIL;
         $columnSubjectcode = Constants::COLUMN_SUBJECT_CODE;
+        if (! $this->isStudentCreatedByTeacher($_id)) {
+            return Constants::EXCEPTION_AUTHORIZATION_ERROR;
+        }
 
         try {
             $connection = $this->instance->getConnection();
@@ -195,6 +200,18 @@ class TeacherModel
 
             throw new Exception("Message: " . $e->getMessage());
         }
+    }
+
+    /**
+     * This function is used to check whether the student is created by the teacher.
+     * @param string $_id
+     * @return bool
+     */
+    public function isStudentCreatedByTeacher($_studentId)
+    {
+        $student = $this->getStudentById($_studentId);
+
+        return $student[Constants::COLUMN_TEACHER_ID] == $_SESSION['teacher_id'];
     }
 
     /**

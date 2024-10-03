@@ -17,7 +17,7 @@ const POST = "POST";
 // Load the routes
 $layout = new Layout();
 $method = $_SERVER['REQUEST_METHOD'];
-$request = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_FILENAME);
+$request = slugToCamelCase(trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
 routes($method, $request);
 
 function routes($method, $request)
@@ -28,14 +28,29 @@ function routes($method, $request)
         $routes = Routes::getRoutes(POST);
     }
 
+    $found = false;
     if (! empty($routes)) {
         foreach ($routes as $route) {
-            if (strstr($request, $route['url'])) {
+            if ($request === $route['url']) {
                 $controller = $route['controller'];
                 $method = $route['method'];
                 $object = new $controller();
                 $object->$method();
+                $found = true;
+                break;
             }
         }
     }
+
+    if (! $found) {
+        Routes::load('404Page');
+    }
+}
+
+/**
+ * Convert slug to camelCase for routing purposes.
+ */
+function slugToCamelCase($_slug)
+{
+    return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $_slug))));
 }

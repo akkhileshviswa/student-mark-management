@@ -79,11 +79,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${student.subject_name}</td>
                 <td class="student-marks">${student.mark}</td>
                 <td>
-                    <form method="GET" action="editStudent">
+                    <form method="GET" action="edit-student">
                             <input type="hidden" id="student_id" name="student_id" value="${student.id}" >
                             <input type="submit" class="btn" value="Edit">
                     </form><br>
-                    <a href="/deleteStudent?id=${student.id}" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
+                    <a href="/delete-student?id=${student.id}" id='delete' onclick="return confirm('Are you sure?')">Delete</a>
                 </td>
             `;
 
