@@ -96,10 +96,10 @@ class TeacherController
     public function loadEditStudent()
     {
         $this->clearMessages();
-        if (! $this->teacherModel->isStudentCreatedByTeacher($_GET['student_id'])) {
-            $_SESSION['error_message'] = "You can't edit the student, since you didn't create it!";
-            $this->loadView("TeacherDashboard");
-        }
+        // if (! $this->teacherModel->isStudentCreatedByTeacher($_GET['student_id'])) {
+        //     $_SESSION['error_message'] = "You can't edit the student, since you didn't create it!";
+        //     $this->loadView("TeacherDashboard");
+        // }
         if ($_SESSION['teacherloggedin'] && ! empty($_GET['student_id'])) {
             $_SESSION['update_student'] = $this->teacherModel->getStudentById($_GET['student_id']);
             $this->loadView("TeacherEditStudent");
