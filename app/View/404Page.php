@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Routes;
+
 ?>
 
 <!DOCTYPE html>

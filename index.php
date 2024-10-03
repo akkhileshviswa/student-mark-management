@@ -37,6 +37,7 @@ function routes($method, $request)
                 $object = new $controller();
                 $object->$method();
                 $found = true;
+
                 break;
             }
         }
