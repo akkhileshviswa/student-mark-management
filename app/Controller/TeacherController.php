@@ -50,6 +50,7 @@ class TeacherController
      */
     public function loadLogin()
     {
+        $this->clearMessages();
         $_SESSION['teacherloggedin'] = 0;
         $this->loadView("TeacherLogin");
     }

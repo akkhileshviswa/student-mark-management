@@ -12,6 +12,7 @@ class Layout
      */
     public function __construct()
     {
+        Routes::get(['url' => '', 'controller' => TeacherController::class, 'method' => 'loadLogin']);
         Routes::get(['url' => 'home', 'controller' => TeacherController::class, 'method' => 'loadLogin']);
         Routes::get(['url' => 'dashboard', 'controller' => TeacherController::class, 'method' => 'loadDashboard']);
         Routes::get(['url' => 'editStudent', 'controller' => TeacherController::class, 'method' => 'loadEditStudent']);

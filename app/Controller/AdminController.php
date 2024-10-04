@@ -45,6 +45,7 @@ class AdminController
      */
     public function loadLogin()
     {
+        $this->clearMessages();
         $_SESSION['adminloggedin'] = 0;
         $this->loadView('AdminLogin');
     }

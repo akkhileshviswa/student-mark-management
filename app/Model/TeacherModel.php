@@ -83,13 +83,13 @@ class TeacherModel
     {
         $connection = $this->instance->getConnection();
         $tableStudents = Constants::TABLE_NAME_STUDENTS;
-        // $columnTeacherId = Constants::COLUMN_TEACHER_ID;
-        // $teacherId = $_SESSION['teacher_id'];
+        $columnTeacherId = Constants::COLUMN_TEACHER_ID;
+        $teacherId = $_SESSION['teacher_id'];
 
-        $students = $connection->prepare("SELECT * FROM $tableStudents");
+        // $students = $connection->prepare("SELECT * FROM $tableStudents");
 
-        // $students = $connection->prepare("SELECT * FROM $tableStudents WHERE $columnTeacherId = :id;");
-        // $students->bindParam(':id', $teacherId);
+        $students = $connection->prepare("SELECT * FROM $tableStudents WHERE $columnTeacherId = :id;");
+        $students->bindParam(':id', $teacherId);
         $students->execute();
         $_SESSION['students'] = $students->fetchAll();
     }
