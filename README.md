@@ -3,6 +3,7 @@
 ## Prerequisites
 - **PHP:** ^8.0
 - **MySQL:** 8.0
+- **Composer:** 2.7
 
 ## Installation Steps
 
