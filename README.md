@@ -21,40 +21,37 @@
 3. **Database Setup**
    I have created a database called `student_mark_management` for this project. Run the following commands to create the necessary tables:
    ```sql
+   CREATE DATABASE student_mark_management;
+
    USE student_mark_management;
 
    CREATE TABLE `admin` (
-       `username` VARCHAR(20) DEFAULT NULL,
-       `password` VARCHAR(100) DEFAULT NULL,
-       UNIQUE KEY `username` (`username`)
+       `username` VARCHAR(20) NOT NULL UNIQUE,
+       `password` VARCHAR(100) NOT NULL
    );
 
    INSERT INTO `admin` (`username`, `password`) VALUES ('your_username', 'your_password'); -- Insert your credentials
 
    CREATE TABLE `subjects` (
-       `subject_code` VARCHAR(20) DEFAULT NULL,
-       `subject_name` VARCHAR(100) DEFAULT NULL,
-       UNIQUE KEY `subject_code` (`subject_code`)
+       `subject_code` VARCHAR(20) NOT NULL UNIQUE,
+       `subject_name` VARCHAR(100) NOT NULL
    );
 
    CREATE TABLE `teachers` (
-       `id` INT NOT NULL AUTO_INCREMENT,
-       `name` VARCHAR(64) DEFAULT NULL,
-       `username` VARCHAR(100) DEFAULT NULL,
-       `password` VARCHAR(150) DEFAULT NULL,
-       `subject_code` JSON DEFAULT NULL,
-       PRIMARY KEY (`id`),
-       UNIQUE KEY `username` (`username`)
+       `id` INT AUTO_INCREMENT PRIMARY KEY,
+       `name` VARCHAR(64) NOT NULL,
+       `username` VARCHAR(100) NOT NULL UNIQUE,
+       `password` VARCHAR(150) NOT NULL,
+       `subject_code` JSON NOT NULL,
    );
 
    CREATE TABLE `students` (
-       `id` INT NOT NULL AUTO_INCREMENT,
-       `name` VARCHAR(64) DEFAULT NULL,
-       `email` VARCHAR(100) DEFAULT NULL,
-       `subject_code` VARCHAR(20) DEFAULT NULL,
+       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       `name` VARCHAR(64) NOT NULL,
+       `email` VARCHAR(100) NOT NULL,
+       `subject_code` VARCHAR(20) NOT NULL,
        `mark` DECIMAL(5,2) DEFAULT NULL,
-       `teacher_id` INT DEFAULT NULL,
-       PRIMARY KEY (`id`),
+       `teacher_id` INT NOT NULL,
        KEY `teacher_id` (`teacher_id`),
        KEY `studentmailsubject` (`email`, `subject_code`, `teacher_id`),
        CONSTRAINT `students_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`)
