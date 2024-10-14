@@ -11,20 +11,14 @@
    ```bash
    git clone https://github.com/akkhileshviswa/student-mark-management.git
    ```
-   This will clone the repo in your local, pointing to the main branch. The logic-level codes are still in the `feature/mark-management-system` branch. 
 
-2. **Checkout to the Feature Branch**
-   ```bash
-   git fetch origin feature/mark-management-system && git checkout feature/mark-management-system
-   ```
-
-3. **Install Dependencies**
+2. **Install Dependencies**
    Run the following command to install the necessary packages:
    ```bash
    composer install
    ```
 
-4. **Database Setup**
+3. **Database Setup**
    I have created a database called `student_mark_management` for this project. Run the following commands to create the necessary tables:
    ```sql
    USE student_mark_management;
@@ -67,10 +61,10 @@
    );
    ```
 
-5. **Environment Configuration**
+4. **Environment Configuration**
    Create a file called `.env` with the contents present in the `.env_sample` file. Configure your MySQL username, password, and database.
 
-6. **Accessing the Portal**
+5. **Accessing the Portal**
    I have created a virtual host and added it to the host file. You can also access the portal without a virtual host:
    - **Admin:** [http://localhost/student-mark-management/index.php/admin](http://localhost/student-mark-management/index.php/admin)
    - **Teacher:** [http://localhost/student-mark-management/index.php/home](http://localhost/student-mark-management/index.php/home)
